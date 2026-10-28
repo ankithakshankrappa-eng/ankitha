@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#18251e">
+  <meta name="description" content="Build for what's next at CampusBuild, a 24-hour student hackathon on January 23–24, 2027.">
+  <title>CampusBuild 2027 | Student Hackathon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #18251e;
+      --green: #284f3b;
+      --lime: #d3f26a;
+      --orange: #f27b50;
+      --cream: #f5f3e9;
+      --paper: #fffefa;
+      --muted: #687168;
+      --line: #dedfd5;
+      --mono: "DM Mono", monospace;
+      --display: "Space Grotesk", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { min-width: 320px; margin: 0; background: var(--paper); color: var(--ink); font-family: "DM Sans", sans-serif; }
+    a { color: inherit; }
+    button, input, select, textarea { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+
+    .site-header {
+      position: absolute;
+      z-index: 3;
+      top: 0;
+      left: 0;
+      display: flex;
+      width: 100%;
+      height: 82px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 7.2%;
+      border-bottom: 1px solid rgb(255 255 255 / 20%);
+      color: #fff;
+    }
+
+    .wordmark { display: inline-flex; align-items: center; gap: 10px; font-family: var(--display); font-size: 15px; font-weight: 700; text-decoration: none; }
+    .wordmark-icon { display: grid; width: 30px; height: 30px; place-items: center; border: 1px solid var(--lime); color: var(--lime); font-size: 16px; }
+    .wordmark span:last-child { white-space: nowrap; }
+    .main-nav { display: flex; align-items: center; gap: 30px; }
+    .main-nav a { color: rgb(255 255 255 / 83%); font-size: 12px; font-weight: 600; text-decoration: none; transition: color 150ms ease; }
+    .main-nav a:hover { color: var(--lime); }
+    .main-nav .nav-register { padding: 11px 16px; border: 1px solid var(--lime); color: var(--lime); }
+
+    .hero {
+      position: relative;
+      display: flex;
+      min-height: 690px;
+      min-height: min(810px, 100svh);
+      align-items: center;
+      overflow: hidden;
+      padding: 130px 7.2% 90px;
+      background: #203d31 url("https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=2200&q=88") center 48% / cover no-repeat;
+      color: #fff;
+      isolation: isolate;
+    }
+
+    .hero::before { position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, rgb(15 31 24 / 88%) 0%, rgb(18 36 27 / 70%) 45%, rgb(18 36 27 / 13%) 100%), linear-gradient(0deg, rgb(15 31 24 / 34%), transparent 58%); content: ""; }
+    .hero-content { width: min(760px, 76%); animation: enter 700ms ease-out both; }
+    .kicker { display: flex; align-items: center; gap: 11px; margin: 0 0 22px; color: var(--lime); font-family: var(--mono); font-size: 11px; text-transform: uppercase; }
+    .kicker::before { width: 27px; height: 1px; background: currentColor; content: ""; }
+    .hero h1 { max-width: 750px; margin: 0; font-family: var(--display); font-size: clamp(56px, 8vw, 108px); font-weight: 600; letter-spacing: 0; line-height: .96; }
+    .hero h1 span { color: var(--lime); }
+    .hero-description { max-width: 470px; margin: 23px 0 0; color: rgb(255 255 255 / 83%); font-size: 16px; line-height: 1.65; }
+    .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; margin-top: 31px; }
+    .button-primary { display: inline-flex; min-height: 49px; align-items: center; justify-content: center; gap: 18px; padding: 0 18px; border: 1px solid var(--lime); background: var(--lime); color: var(--ink); font-size: 13px; font-weight: 700; text-decoration: none; transition: background 150ms ease, color 150ms ease; }
+    .button-primary:hover { background: transparent; color: var(--lime); }
+    .button-arrow { font-size: 18px; }
+    .hero-meta { color: rgb(255 255 255 / 75%); font-family: var(--mono); font-size: 10px; line-height: 1.8; text-transform: uppercase; }
+    .hero-index { position: absolute; right: 7.2%; bottom: 40px; color: rgb(255 255 255 / 65%); font-family: var(--mono); font-size: 10px; }
+
+    .ticker { display: flex; min-height: 52px; align-items: center; justify-content: center; gap: clamp(20px, 5vw, 78px); overflow: hidden; padding: 10px 24px; background: var(--lime); color: var(--ink); font-family: var(--mono); font-size: 10px; text-transform: uppercase; }
+    .ticker span { white-space: nowrap; }
+    .ticker span::before { margin-right: 10px; color: var(--orange); content: "+"; }
+
+    .section { padding: 112px 7.2%; }
+    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 28px; margin-bottom: 47px; }
+    .section-label { margin: 0 0 14px; color: var(--green); font-family: var(--mono); font-size: 10px; text-transform: uppercase; }
+    .section h2 { max-width: 620px; margin: 0; font-family: var(--display); font-size: clamp(37px, 5vw, 62px); font-weight: 600; letter-spacing: 0; line-height: 1.02; }
+    .section-heading > p { max-width: 300px; margin: 0 0 4px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+
+    .event-strip { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .event-fact { min-height: 123px; padding: 25px 22px 22px 0; }
+    .event-fact + .event-fact { padding-left: 22px; border-left: 1px solid var(--line); }
+    .fact-label { display: block; margin-bottom: 13px; color: var(--muted); font-family: var(--mono); font-size: 10px; text-transform: uppercase; }
+    .event-fact strong { display: block; font-family: var(--display); font-size: 19px; font-weight: 600; }
+    .event-fact small { display: block; margin-top: 5px; color: var(--muted); font-size: 11px; }
+
+    .tracks-section { background: var(--cream); }
+    .track-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid #d5d9cd; border-bottom: 1px solid #d5d9cd; }
+    .track { min-height: 235px; padding: 22px 19px 24px 0; }
+    .track + .track { padding-left: 20px; border-left: 1px solid #d5d9cd; }
+    .track-number { color: var(--orange); font-family: var(--mono); font-size: 10px; }
+    .track-icon { display: block; margin: 22px 0 18px; color: var(--green); font-size: 24px; }
+    .track h3 { margin: 0; font-family: var(--display); font-size: 19px; font-weight: 600; }
+    .track p { max-width: 225px; margin: 9px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+
+    .prizes-section { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); align-items: start; gap: 80px; background: var(--green); color: #fff; }
+    .prizes-section .section-label { color: var(--lime); }
+    .prizes-section .section-heading { display: block; margin: 0; }
+    .prizes-section .section-heading > p { max-width: 340px; margin-top: 20px; color: rgb(255 255 255 / 70%); }
+    .prize-list { border-top: 1px solid rgb(255 255 255 / 28%); }
+    .prize-row { display: grid; grid-template-columns: 58px 1fr auto; min-height: 91px; align-items: center; gap: 14px; border-bottom: 1px solid rgb(255 255 255 / 28%); }
+    .prize-place { color: var(--lime); font-family: var(--mono); font-size: 11px; }
+    .prize-row h3 { margin: 0; font-family: var(--display); font-size: 19px; font-weight: 500; }
+    .prize-row p { margin: 5px 0 0; color: rgb(255 255 255 / 65%); font-size: 11px; }
+    .prize-amount { color: var(--lime); font-family: var(--display); font-size: 24px; font-weight: 600; white-space: nowrap; }
+    .prize-note { margin: 14px 0 0; color: rgb(255 255 255 / 62%); font-size: 10px; }
+
+    .schedule-section { background: var(--paper); }
+    .schedule-list { max-width: 900px; border-top: 1px solid var(--line); }
+    .schedule-row { display: grid; grid-template-columns: 110px 1fr 130px; min-height: 75px; align-items: center; gap: 20px; border-bottom: 1px solid var(--line); }
+    .schedule-time { color: var(--green); font-family: var(--mono); font-size: 11px; }
+    .schedule-row h3 { margin: 0; font-family: var(--display); font-size: 17px; font-weight: 600; }
+    .schedule-row p { margin: 4px 0 0; color: var(--muted); font-size: 11px; }
+    .schedule-day { justify-self: end; color: var(--muted); font-family: var(--mono); font-size: 10px; text-transform: uppercase; }
+
+    .registration { padding-top: 105px; padding-bottom: 110px; background: var(--cream); }
+    .registration-layout { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 8%; align-items: start; }
+    .registration-copy { position: sticky; top: 36px; }
+    .registration-copy .section-label { margin-bottom: 15px; }
+    .registration-copy h2 { margin: 0; font-family: var(--display); font-size: clamp(40px, 5vw, 64px); font-weight: 600; line-height: 1; }
+    .registration-copy > p { max-width: 380px; margin: 20px 0 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+    .fee-box { display: flex; max-width: 370px; align-items: center; justify-content: space-between; gap: 18px; margin-top: 33px; padding: 16px 0; border-top: 1px solid #d5d9cd; border-bottom: 1px solid #d5d9cd; }
+    .fee-box span { color: var(--muted); font-size: 12px; }
+    .fee-box strong { font-family: var(--display); font-size: 21px; }
+    .registration-deadline { margin-top: 18px; color: var(--green); font-family: var(--mono); font-size: 10px; text-transform: uppercase; }
+
+    .registration-form { padding-top: 5px; }
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 19px 17px; }
+    .form-field { min-width: 0; }
+    .form-field.full { grid-column: 1 / -1; }
+    .form-field label { display: block; margin-bottom: 7px; color: #39453c; font-size: 11px; font-weight: 700; }
+    .form-field input, .form-field select, .form-field textarea { width: 100%; min-height: 46px; padding: 11px 12px; border: 1px solid #cfd4c9; border-radius: 0; outline: none; background: #fffefa; color: var(--ink); font-size: 12px; }
+    .form-field textarea { min-height: 93px; resize: vertical; }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgb(40 79 59 / 12%); }
+    .form-field input::placeholder, .form-field textarea::placeholder { color: #92988f; }
+    .form-consent { display: flex; align-items: start; gap: 9px; margin: 19px 0 21px; color: var(--muted); font-size: 11px; line-height: 1.5; }
+    .form-consent input { flex: 0 0 auto; width: 15px; height: 15px; margin: 1px 0 0; accent-color: var(--green); }
+    .form-submit { width: 100%; min-height: 50px; border: 1px solid var(--ink); background: var(--ink); color: #fff; cursor: pointer; font-size: 12px; font-weight: 700; transition: color 150ms ease, background 150ms ease; }
+    .form-submit:hover { background: transparent; color: var(--ink); }
+    .form-submit:focus-visible, .button-primary:focus-visible, .main-nav a:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+    .form-status { min-height: 20px; margin: 12px 0 0; color: var(--green); font-size: 11px; line-height: 1.5; }
+
+    .site-footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 27px 7.2%; background: var(--ink); color: #fff; }
+    .site-footer p { margin: 0; color: rgb(255 255 255 / 65%); font-size: 10px; }
+    .site-footer a { color: var(--lime); font-size: 10px; text-decoration: none; }
+
+    @keyframes enter { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 850px) {
+      .site-header { padding-right: 5%; padding-left: 5%; }
+      .main-nav { gap: 17px; }
+      .main-nav a { font-size: 11px; }
+      .hero { padding-right: 5%; padding-left: 5%; }
+      .hero-content { width: 82%; }
+      .section { padding-right: 5%; padding-left: 5%; }
+      .prizes-section { gap: 40px; }
+      .registration-layout { gap: 5%; }
+    }
+
+    @media (max-width: 650px) {
+      .site-header { height: 68px; }
+      .wordmark { font-size: 13px; }
+      .main-nav { gap: 14px; }
+      .main-nav a:not(.nav-register) { display: none; }
+      .main-nav .nav-register { padding: 9px 12px; }
+      .hero { min-height: 690px; min-height: 90svh; padding: 110px 24px 90px; background-position: 58% center; }
+      .hero::before { background: linear-gradient(90deg, rgb(15 31 24 / 83%) 0%, rgb(18 36 27 / 57%) 72%, rgb(18 36 27 / 25%) 100%), linear-gradient(0deg, rgb(15 31 24 / 42%), transparent 58%); }
+      .hero-content { width: 100%; }
+      .hero h1 { font-size: clamp(56px, 15vw, 84px); }
+      .hero-description { max-width: 360px; font-size: 14px; }
+      .hero-index { right: 24px; bottom: 25px; }
+      .ticker { justify-content: flex-start; gap: 24px; }
+      .ticker span:nth-child(n+4) { display: none; }
+      .section { padding: 78px 24px; }
+      .section-heading { display: block; margin-bottom: 32px; }
+      .section-heading > p { margin-top: 17px; }
+      .event-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .event-fact { min-height: 108px; padding: 19px 12px 16px 0; }
+      .event-fact + .event-fact { padding-left: 12px; }
+      .event-fact:nth-child(3) { padding-left: 0; border-top: 1px solid var(--line); border-left: 0; }
+      .event-fact:nth-child(4) { border-top: 1px solid var(--line); }
+      .event-fact strong { font-size: 17px; }
+      .track-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .track { min-height: 210px; padding: 18px 12px 20px 0; }
+      .track + .track { padding-left: 13px; }
+      .track:nth-child(3) { padding-left: 0; border-top: 1px solid #d5d9cd; border-left: 0; }
+      .track:nth-child(4) { border-top: 1px solid #d5d9cd; }
+      .track h3 { font-size: 16px; }
+      .track p { font-size: 11px; }
+      .prizes-section { grid-template-columns: 1fr; gap: 36px; }
+      .prize-row { grid-template-columns: 42px 1fr auto; gap: 8px; }
+      .prize-row h3 { font-size: 16px; }
+      .prize-amount { font-size: 19px; }
+      .schedule-row { grid-template-columns: 76px 1fr; gap: 12px; padding: 13px 0; }
+      .schedule-day { grid-column: 2; justify-self: start; }
+      .schedule-row h3 { font-size: 15px; }
+      .registration-layout { grid-template-columns: 1fr; gap: 40px; }
+      .registration-copy { position: static; }
+      .form-grid { gap: 16px 11px; }
+      .form-field label { font-size: 10px; }
+      .form-field input, .form-field select, .form-field textarea { font-size: 11px; }
+      .site-footer { align-items: flex-start; flex-direction: column; padding: 24px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="#home" aria-label="CampusBuild home">
+      <span class="wordmark-icon" aria-hidden="true">{ }</span>
+      <span>CAMPUSBUILD <span style="color: var(--lime)">27</span></span>
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="#event">Event</a>
+      <a href="#tracks">Tracks</a>
+      <a href="#prizes">Prizes</a>
+      <a class="nav-register" href="#register">Register <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home" aria-labelledby="hero-title">
+      <div class="hero-content">
+        <p class="kicker">Student hackathon · 24 hours</p>
+        <h1 id="hero-title">Build for<br>what's <span>next.</span></h1>
+        <p class="hero-description">A weekend to turn bold ideas into real things. Bring your team, find your people, and make something that matters.</p>
+        <div class="hero-actions">
+          <a class="button-primary" href="#register">Claim your team spot <span class="button-arrow" aria-hidden="true">↗</span></a>
+          <span class="hero-meta">23—24 January 2027<br>On campus · Open to students</span>
+        </div>
+      </div>
+      <span class="hero-index">01 / MAKE SOMETHING REAL</span>
+    </section>
+
+    <div class="ticker" aria-label="Event themes">
+      <span>Ideas into impact</span><span>Make it together</span><span>Learn by building</span><span>One weekend, big ideas</span><span>Ideas into impact</span>
+    </div>
+
+    <section class="section" id="event" aria-labelledby="event-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-label">01 / The details</p>
+          <h2 id="event-title">Two days.<br>One big idea.</h2>
+        </div>
+        <p>Bring a rough sketch or just your curiosity. Spend 24 hours learning, collaborating, and building a project from the ground up.</p>
+      </div>
+      <div class="event-strip">
+        <div class="event-fact"><span class="fact-label">When</span><strong>23—24 January</strong><small>Saturday to Sunday, 2027</small></div>
+        <div class="event-fact"><span class="fact-label">Where</span><strong>College campus</strong><small>Innovation &amp; Technology Center</small></div>
+        <div class="event-fact"><span class="fact-label">Team size</span><strong>2—4 students</strong><small>All departments welcome</small></div>
+        <div class="event-fact"><span class="fact-label">Registration</span><strong>₹500 / team</strong><small>One fee covers your whole team</small></div>
+      </div>
+    </section>
+
+    <section class="section tracks-section" id="tracks" aria-labelledby="tracks-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-label">02 / Pick a direction</p>
+          <h2 id="tracks-title">What will you make?</h2>
+        </div>
+        <p>Choose one project category to guide your build. The best solutions start with a problem worth solving.</p>
+      </div>
+      <div class="track-grid">
+        <article class="track"><span class="track-number">TRACK 01</span><span class="track-icon" aria-hidden="true">⌁</span><h3>AI &amp; Data for Good</h3><p>Use responsible AI and data to make everyday life work better.</p></article>
+        <article class="track"><span class="track-number">TRACK 02</span><span class="track-icon" aria-hidden="true">⌂</span><h3>Climate &amp; Sustainability</h3><p>Build practical ideas for a more resourceful, resilient future.</p></article>
+        <article class="track"><span class="track-number">TRACK 03</span><span class="track-icon" aria-hidden="true">＋</span><h3>Health &amp; Wellbeing</h3><p>Make care, connection, and healthy choices more accessible.</p></article>
+        <article class="track"><span class="track-number">TRACK 04</span><span class="track-icon" aria-hidden="true">▤</span><h3>Open Innovation</h3><p>Take on a challenge you care about. Surprise us with your idea.</p></article>
+      </div>
+    </section>
+
+    <section class="section prizes-section" id="prizes" aria-labelledby="prizes-title">
+      <div class="section-heading">
+        <p class="section-label">03 / The rewards</p>
+        <h2 id="prizes-title">Big ideas.<br>Real rewards.</h2>
+        <p>Every finalist gets feedback from industry mentors. The top teams take home prize money and a chance to keep building.</p>
+      </div>
+      <div>
+        <div class="prize-list">
+          <article class="prize-row"><span class="prize-place">01 / WINNER</span><div><h3>First place</h3><p>Plus mentor sessions for your next step</p></div><strong class="prize-amount">₹50,000</strong></article>
+          <article class="prize-row"><span class="prize-place">02 / RUNNER-UP</span><div><h3>Second place</h3><p>Plus mentor sessions for your next step</p></div><strong class="prize-amount">₹25,000</strong></article>
+          <article class="prize-row"><span class="prize-place">03 / THIRD</span><div><h3>Third place</h3><p>Plus mentor sessions for your next step</p></div><strong class="prize-amount">₹10,000</strong></article>
+        </div>
+        <p class="prize-note">Prize amounts are per winning team. Subject to final event rules.</p>
+      </div>
+    </section>
+
+    <section class="section schedule-section" id="schedule" aria-labelledby="schedule-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-label">04 / The weekend</p>
+          <h2 id="schedule-title">A little structure.<br>A lot of making.</h2>
+        </div>
+        <p>Event timings and venue details will be shared with registered teams before the weekend.</p>
+      </div>
+      <div class="schedule-list">
+        <article class="schedule-row"><span class="schedule-time">09:00 AM</span><div><h3>Check-in &amp; team setup</h3><p>Get settled, meet the crew, grab a coffee.</p></div><span class="schedule-day">Saturday · Jan 23</span></article>
+        <article class="schedule-row"><span class="schedule-time">10:30 AM</span><div><h3>Kickoff &amp; challenge reveal</h3><p>Meet the mentors and choose your direction.</p></div><span class="schedule-day">Saturday · Jan 23</span></article>
+        <article class="schedule-row"><span class="schedule-time">12:00 PM</span><div><h3>Build time begins</h3><p>Workshops, mentor check-ins, food, and focus.</p></div><span class="schedule-day">Saturday · Jan 23</span></article>
+        <article class="schedule-row"><span class="schedule-time">10:00 AM</span><div><h3>Demo day &amp; awards</h3><p>Show what you made and celebrate every team.</p></div><span class="schedule-day">Sunday · Jan 24</span></article>
+      </div>
+    </section>
+
+    <section class="section registration" id="register" aria-labelledby="register-title">
+      <div class="registration-layout">
+        <div class="registration-copy">
+          <p class="section-label">05 / Save your spot</p>
+          <h2 id="register-title">Your next idea starts here.</h2>
+          <p>Register one teammate as the team lead. Have your team name, college details, and chosen category ready.</p>
+          <div class="fee-box"><span>Registration fee · per team (2–4 people)</span><strong>₹500</strong></div>
+          <p class="registration-deadline">Registration closes 15 January 2027</p>
+        </div>
+
+        <form class="registration-form" id="registration-form">
+          <div class="form-grid">
+            <div class="form-field"><label for="team-name">Team name</label><input id="team-name" name="teamName" type="text" autocomplete="organization-title" placeholder="Your team name" maxlength="60" required></div>
+            <div class="form-field"><label for="team-size">Team size</label><select id="team-size" name="teamSize" required><option value="" disabled selected>Select size</option><option>2 members</option><option>3 members</option><option>4 members</option></select></div>
+            <div class="form-field"><label for="leader-name">Team lead name</label><input id="leader-name" name="leaderName" type="text" autocomplete="name" placeholder="Full name" required></div>
+            <div class="form-field"><label for="email">College email</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@college.edu" required></div>
+            <div class="form-field"><label for="college">College / institution</label><input id="college" name="college" type="text" autocomplete="organization" placeholder="Your college name" required></div>
+            <div class="form-field"><label for="phone">Contact number</label><input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+919876543210" pattern="[+]?[0-9]{8,15}" required></div>
+            <div class="form-field full"><label for="category">Project category</label><select id="category" name="category" required><option value="" disabled selected>Choose a project category</option><option>AI &amp; Data for Good</option><option>Climate &amp; Sustainability</option><option>Health &amp; Wellbeing</option><option>Open Innovation</option></select></div>
+            <div class="form-field full"><label for="idea">What would you like to build? <span style="color: var(--muted); font-weight: 400">(optional)</span></label><textarea id="idea" name="idea" placeholder="A sentence or two about your early idea is plenty." maxlength="500"></textarea></div>
+          </div>
+          <label class="form-consent"><input type="checkbox" name="agreement" required><span>I confirm our team has 2–4 student members and agree to follow the event rules.</span></label>
+          <button class="form-submit" type="submit">Submit team registration <span aria-hidden="true">↗</span></button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>CampusBuild 2027 · 23—24 January · Built by students, for students.</p>
+    <a href="mailto:eventdesk@yourcollege.edu">Questions? Contact the organizers</a>
+  </footer>
+
+  <script>
+    const registrationForm = document.querySelector("#registration-form");
+    const formStatus = document.querySelector("#form-status");
+
+    registrationForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (!registrationForm.reportValidity()) return;
+      const teamName = new FormData(registrationForm).get("teamName");
+      formStatus.textContent = `Thanks, ${teamName}! Your details are ready, but this demo does not send registrations. Contact the event organizers to complete your registration.`;
+      registrationForm.reset();
+    });
+  </script>
+</body>
+</html>
